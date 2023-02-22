@@ -1,6 +1,4 @@
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.lang.Thread.sleep;
@@ -8,8 +6,7 @@ import static java.lang.Thread.sleep;
 public class Task2 {
     private final int n = 20;
     private static volatile AtomicInteger number = new AtomicInteger(1);
-    public static ConcurrentLinkedQueue<String> queue = new ConcurrentLinkedQueue();
-    ExecutorService service = Executors.newFixedThreadPool(4);
+    public BlockingQueue<String> queue = new LinkedBlockingQueue<>();
 
     public synchronized void fizz() {
         while (number.get() <= n) {
@@ -78,7 +75,7 @@ public class Task2 {
     public synchronized void show() {
         while (true) {
             try {
-                sleep(10000);
+                sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
